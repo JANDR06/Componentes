@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,6 +54,30 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<Usuario> miAdaptador = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, usuarios);
         spinner.setAdapter(miAdaptador);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                textViewS.setText(usuarios.get(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nom = nombre.getText().toString();
+                String ape = apellidos.getText().toString();
+                usuarios.add(new Usuario(nom, ape));
+                nombre.setText("");
+                apellidos.setText("");
+                miAdaptador.notifyDataSetChanged();
+            }
+        });
 
         checkBox.setOnClickListener (new View.OnClickListener() {
             @Override
